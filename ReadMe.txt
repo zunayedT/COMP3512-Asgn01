@@ -3,6 +3,27 @@
 3. Oct 05, 2025 - Tyler added index.php file starting the development of the customer summary.
 
 
+Date: 100/10/2025
+
+So far implementaiton:
+June:  Number of shares
+		button mapping 
+		total number of companies 
+		total vlue: on process
+Tyler: listing
+		creating the buttons
+		header 
+		footer
+		
+Next step():
+		
+Color Scheme():
+	Black Base
+	white
+	Blue
+	Gold (highlighting)
+	Button Color dark or midnight blue. 
+
 
 
 
