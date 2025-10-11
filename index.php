@@ -94,6 +94,29 @@ function getPortfolioData($userID){
     $sumResult = $db->query($sumStockQueryString);
     $totalSumResult = $sumResult->fetchColumn();
     echo "<p> summation of the total shares:  $totalSumResult</p>";
+
+    //Get details for the each stock holdings by the speicfic users
+    $detailsSql = "
+        SELECT p.symbol, s.name, s.sector, p.amount
+        FROM portfolio p
+        JOIN stocks s ON p.symbol = s.symbol
+        WHERE p.userId = ?
+    ";
+    $stmt = $db->prepare($detailsSql);
+    $stmt->execute([$userId]);
+    $portfolioRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    //Calculating value of each stock and total portfolio value
+    $totalPortValue = 0;
+    foreach ($portfolioRows as &$row) {
+        $closeSql = "SELECT close FROM history WHERE symbol = ? ORDER BY date DESC LIMIT 1";
+        $stmt = $db->prepare($closeSql);
+        $stmt->execute([$row['symbol']]);
+        $latestClose = $stmt->fetchColumn();
+        $row['latest_close'] = $latestClose;
+        $row['stock_value'] = $latestClose * $row['amount'];
+        $totalValue += $row['stock_value'];
+    }
 }
 ?>
 </body>
