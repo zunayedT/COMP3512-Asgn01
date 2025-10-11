@@ -3,7 +3,7 @@
 3. Oct 05, 2025 - Tyler added index.php file starting the development of the customer summary.
 
 
-Date: 100/10/2025
+Date: 10/10/2025
 
 So far implementaiton:
 June:  Number of shares
@@ -23,6 +23,15 @@ Color Scheme():
 	Blue
 	Gold (highlighting)
 	Button Color dark or midnight blue. 
+
+Date: 11/10/2025
+
+Implementaiton progress:
+Tyler: 
+		apis.php (created page and simple php layout with no styling)
+		about.php (same thing)
+		config.inc.php (created page and added database connection string)
+		currently working on creating api folder with apis that return JSON (json_encode etc.)
 
 
 
