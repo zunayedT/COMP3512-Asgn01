@@ -1,6 +1,5 @@
 <?php
-//include
-require_once('includes/config.inc.php');
+//doesn't need include
 ?>
 
 <!DOCTYPE html>

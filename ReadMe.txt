@@ -33,6 +33,13 @@ Tyler:
 		config.inc.php (created page and added database connection string)
 		currently working on creating api folder with apis that return JSON (json_encode etc.)
 
+		-- Cont,
+		created api folder with companies.php,history.php, and portfolio.php that will allow to see JSON
+		 -> code is all there but there is an issue with reference the files inside folders so JSON is not appearing
+		edited config.inc.php and added a helper class to it
+		created db-classes.inc.php with defined classes for each API page to reference
+		edited api.php
+
 
 
 

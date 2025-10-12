@@ -2,7 +2,7 @@
 //include
 require_once('includes/config.inc.php');
 // array for table display
-// using "ads" and "1" as temp placeholders from e.g in step 6.
+// **STILL NEED TO USE $_GET TO GET ref VALUE**
 $endpoints = [
     'api/companies.php'          => 'Returns all the companies/stocks',
     'api/companies.php?ref='  => 'Return just a specific company/stock',
