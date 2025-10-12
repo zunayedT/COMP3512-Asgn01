@@ -2,6 +2,7 @@
 //include file (but do we even need one since only defining the sqlite host and not pass/user like in lab 14a?)
 //-yes we are goood just like this cacuse sql lite has operator system level validation ass good like this.
 //i will still create the inc file which will contain the API you will need for the button to work. -june
+require_once __DIR__ . '/includes/config.inc.php';
 ?>
 
 <!DOCTYPE html>
@@ -56,7 +57,7 @@
 
     </section>
     <!--portfolio summary portion start -June-->
-    <section style="width: 75%;">
+    <section style="width: 75%; display: grid;" id="portSumSection">
         <?php
         //getting the id from the click then running the sql search for the specific user.
         if (isset($_GET["userid"])){
@@ -64,11 +65,12 @@
             //remember user id in the portfolio table is the ID in the user table. -June
             try{
                 //calling the associated functiions
-                $data = getPortfolioData($userID); 
+                $data = DatabaseHelper::getPortfolioData($userID);
+                showPortfolioData($data);
                 //once the data is retrived show it to the user;
-                //showPortfolioData($data);
+                
             } catch (Exception $ex){//we all hate our ex'es :) - June
-                echo "<p>Database error: " . htmlspecialchars($e->getMessage()) . "</p>";
+                echo "<p>Database error: " . $ex . "</p>";
             }
         } else {
             echo "<p>Please select a customer or else the code wont work</p>";
@@ -77,47 +79,81 @@
     </section>
     </main>
 <?php
-//global functoins start
+//global methods start - June
+function showPortfolioData($result) {
+    // Extract key values safely
+    $totalCompanies = $result['total_unique_companies'] ?? 0;
+    $totalShares = $result['total_shares'] ?? 0;
+    $totalValue = $result['total_portfolio_value'] ?? 0;
+    $portfolio = $result['portfolio'] ?? [];
 
-function getPortfolioData($userID){
-    //open connection to database
-    $db = new pdo('sqlite:data/stocks.db');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    // get the comapany data
-    $comSqlQuery = "SELECT COUNT(DISTINCT symbol) FROM portfolio where userid = $userID";
-    $comResult = $db->query($comSqlQuery);
-    $totalCom = $comResult->fetchColumn();
-    echo "<p> total number of shares = $totalCom </p>";
+    echo "
+    <section>
+        <h1>Portfolio Summary</h1>
 
-    //get the total shared owned shared by the userID
-    $sumStockQueryString = "SELECT SUM(amount) FROM portfolio WHERE userId = $userID";
-    $sumResult = $db->query($sumStockQueryString);
-    $totalSumResult = $sumResult->fetchColumn();
-    echo "<p> summation of the total shares:  $totalSumResult</p>";
+        <div>
+            <div>
+                <h3>Companies</h3>
+                <p>$totalCompanies</p>
+                <p>Count of records</p>
+            </div>
 
-    //Get details for the each stock holdings by the speicfic users
-    $detailsSql = "
-        SELECT p.symbol, s.name, s.sector, p.amount
-        FROM portfolio p
-        JOIN stocks s ON p.symbol = s.symbol
-        WHERE p.userId = ?
+            <div>
+                <h3># Shares</h3>
+                <p>$totalShares</p>
+                <p>Sum of amount field</p>
+            </div>
+
+            <div>
+                <h3>Total Value</h3>
+                <p>\$" . number_format($totalValue, 2) . "</p>
+                <p>Sum of stock values</p>
+            </div>
+        </div>
+
+        <h2>Portfolio Details</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Symbol</th>
+                    <th>Name</th>
+                    <th>Sector</th>
+                    <th>Amount</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
     ";
-    $stmt = $db->prepare($detailsSql);
-    $stmt->execute([$userId]);
-    $portfolioRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    //Calculating value of each stock and total portfolio value
-    $totalPortValue = 0;
-    foreach ($portfolioRows as &$row) {
-        $closeSql = "SELECT close FROM history WHERE symbol = ? ORDER BY date DESC LIMIT 1";
-        $stmt = $db->prepare($closeSql);
-        $stmt->execute([$row['symbol']]);
-        $latestClose = $stmt->fetchColumn();
-        $row['latest_close'] = $latestClose;
-        $row['stock_value'] = $latestClose * $row['amount'];
-        $totalValue += $row['stock_value'];
+    // Output each row from the portfolio array
+    foreach ($portfolio as $row) {
+        $symbol = htmlspecialchars($row['symbol']);
+        $name = htmlspecialchars($row['name']);
+        $sector = htmlspecialchars($row['sector']);
+        $amount = (int)$row['amount'];
+        $value = number_format($row['stock_value'], 2);
+
+        echo "
+            <tr>
+                <td><a href='company.php?ref=$symbol'>$symbol</a></td>
+                <td><a href='company.php?ref=$symbol'>$name</a></td>
+                <td>$sector</td>
+                <td>$amount</td>
+                <td>\$$value</td>
+            </tr>
+        ";
     }
+
+    echo "
+            </tbody>
+        </table>
+    </section>
+    ";
 }
+
+
+
 ?>
 </body>
 </html>
