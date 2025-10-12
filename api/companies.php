@@ -2,8 +2,11 @@
 //Companies API Page
 
 //include file **THESE DO NOT WORK because file name is not working properly**
-require_once 'includes/config.inc.php';
-require_once 'includes/db-classes.inc.php';
+//yeah we need to use abosolute pathing inorder to make the program more robust. -June 10/12/2025
+require_once __DIR__ . '/../includes/config.inc.php';
+require_once __DIR__ . '/../includes/db-classes.inc.php';
+//refrence stack oveflow: https://stackoverflow.com/questions/32537477/how-to-use-dir;
+
 
 //browser expects JSON instead of HTML
 header('Content-type: application/json');
@@ -19,7 +22,10 @@ function isCorrectQueryStringInfo($param) {
 }
 
 try {
-    $conn = DatabaseHelper::createConnection(array(DBCONNSTRING, DBUSER, DBPASS));
+    //updating the way we access the database with abosolute pathing and proper sqllite commands - June
+    $dbPath = __DIR__ . '/../data/stocks.db';
+    $conn = new PDO("sqlite:" . $dbPath);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $gateway = new CompaniesDB($conn);
  
     if ( isCorrectQueryStringInfo("ref") )

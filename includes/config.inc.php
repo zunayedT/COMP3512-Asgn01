@@ -1,6 +1,6 @@
 <?php
 //allows us to define our database connection in one place          
-define('DBCONNSTRING', 'sqlite:./data/stocks.db');
+define('DBCONNSTRING', 'sqlite:' . __DIR__ . '/../data/stocks.db');
 define ('DBUSER', '');
 define ('DBPASS', '');
 

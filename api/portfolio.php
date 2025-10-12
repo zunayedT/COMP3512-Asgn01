@@ -2,8 +2,10 @@
 //Portfolio API Page
 
 //include file **THESE DO NOT WORK because file name is not working properly**
-require_once 'includes/config.inc.php';
-require_once 'includes/db-classes.inc.php';
+require_once __DIR__ . '/../includes/config.inc.php';
+require_once __DIR__ . '/../includes/db-classes.inc.php';
+//adding absolute pathing here aswell;
+
 
 //browser expects JSON instead of HTML
 header('Content-type: application/json');
@@ -20,7 +22,7 @@ function isCorrectQueryStringInfo($param) {
 
 try {
     $conn = DatabaseHelper::createConnection(array(DBCONNSTRING, DBUSER, DBPASS));
-    $gateway = new CompaniesDB($conn);
+    $gateway = new PortfolioDB($conn);
  
     if ( isCorrectQueryStringInfo("ref") )
        $rows = $gateway->getAllForUser($_GET["ref"]);

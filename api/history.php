@@ -2,9 +2,9 @@
 //History API Page
 
 //include file **THESE DO NOT WORK because file name is not working properly**
-require_once 'includes/config.inc.php';
-require_once 'includes/db-classes.inc.php';
-
+require_once __DIR__ . '/../includes/config.inc.php';
+require_once __DIR__ . '/../includes/db-classes.inc.php';
+//absolute pathing update - June
 //browser expects JSON instead of HTML
 header('Content-type: application/json');
 //states if other domains can use this API
@@ -20,7 +20,7 @@ function isCorrectQueryStringInfo($param) {
 
 try {
     $conn = DatabaseHelper::createConnection(array(DBCONNSTRING, DBUSER, DBPASS));
-    $gateway = new CompaniesDB($conn);
+    $gateway = new HistoryDB($conn); //histories class should be called -june
  
     if ( isCorrectQueryStringInfo("ref") )
        $rows = $gateway->getAllForSymbolAsc($_GET["ref"]);

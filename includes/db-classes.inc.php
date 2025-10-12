@@ -5,7 +5,7 @@
 //companies class
 class CompaniesDB {
     private $pdo;
-    private static $baseSQL = "SELECT symbol, name, sector FROM stocks ";
+    private static $baseSQL = "SELECT symbol, name, sector FROM companies ";
  
     public function __construct($pdo) { 
         $this->pdo = $pdo; 
@@ -20,7 +20,7 @@ class CompaniesDB {
  
     //returns specific company/stock
     public function getOneBySymbol($symbol) {
-       $sql = self::$baseSQL . " WHERE symbol = ?";
+       $sql = self::$baseSQL . " WHERE symbol LIKE ?"; //used 'LIKE' so that its not case sensistive -June
        $statement = DatabaseHelper::runQuery($this->pdo, $sql, array($symbol));
        return $statement->fetchAll();
     }
@@ -47,7 +47,7 @@ class CompaniesDB {
  class PortfolioDB {
     private $pdo;
     private static $baseSQL = "SELECT p.userId, p.symbol, p.amount, s.name, s.sector 
-    FROM portfolio p JOIN stocks s ON p.symbol = s.symbol";
+    FROM portfolio p JOIN companies s ON p.symbol = s.symbol";
  
     public function __construct($pdo) { 
         $this->pdo = $pdo; 

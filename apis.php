@@ -1,13 +1,16 @@
 <?php
 //include
-require_once('includes/config.inc.php');
+//require_once('includes/config.inc.php');
+//updating line 3 with absolute pathing cause why not - June
+require_once __DIR__ . '/includes/config.inc.php';
+//refrence: https://stackoverflow.com/questions/32537477/how-to-use-dir;
 // array for table display
 // **STILL NEED TO USE $_GET TO GET ref VALUE**
 $endpoints = [
     'api/companies.php'          => 'Returns all the companies/stocks',
-    'api/companies.php?ref='  => 'Return just a specific company/stock',
-    'api/portfolio.php?ref='    => 'Returns all the portfolios for a specific sample customer',
-    'api/history.php?ref='    => 'Returns the history information for a specific sample company'
+    'api/companies.php?ref=ads'  => 'Return just a specific company/stock',
+    'api/portfolio.php?ref=8'    => 'Returns all the portfolios for a specific sample customer',
+    'api/history.php?ref=AAPL'    => 'Returns the history information for a specific sample company'
 ];
 ?>
 
