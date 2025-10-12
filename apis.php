@@ -1,14 +1,13 @@
 <?php
 //include
-//require_once('config.inc.php');
-
+require_once('includes/config.inc.php');
 // array for table display
 // using "ads" and "1" as temp placeholders from e.g in step 6.
 $endpoints = [
     'api/companies.php'          => 'Returns all the companies/stocks',
-    'api/companies.php?ref=ads'  => 'Return just a specific company/stock',
-    'api/portfolio.php?ref=1'    => 'Returns all the portfolios for a specific sample customer',
-    'api/history.php?ref=ads'    => 'Returns the history information for a specific sample company'
+    'api/companies.php?ref='  => 'Return just a specific company/stock',
+    'api/portfolio.php?ref='    => 'Returns all the portfolios for a specific sample customer',
+    'api/history.php?ref='    => 'Returns the history information for a specific sample company'
 ];
 ?>
 
@@ -41,8 +40,8 @@ echo "<tr><th>URL</th><th>Description</th></tr>";
 //Loops array output - defined at start of page
 foreach ($endpoints as $key => $value) {
     echo "<tr>";
-    echo "<td><a href='" . htmlspecialchars($key) . "'>" . htmlspecialchars($key) . "</a></td>";
-    echo "<td>" . htmlspecialchars($value) . "</td>";
+    echo "<td><a href='" . $key . "'>" . $key . "</a></td>";
+    echo "<td>" . $value . "</td>";
     echo "</tr>";
 }
 

@@ -1,5 +1,6 @@
 <?php
 //include
+require_once('includes/config.inc.php');
 ?>
 
 <!DOCTYPE html>
