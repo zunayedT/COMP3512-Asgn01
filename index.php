@@ -47,8 +47,8 @@ require_once __DIR__ . '/includes/config.inc.php';
                 echo "<td><a href='index.php?userid=" . $row["id"] . "'>Portfolio</a></td>";
                 echo "</tr>";
             }
-
             echo "</table>";
+            $db = null;
 
         } catch (PDOException $e) {
             echo "Database connection failed: " . $e->getMessage();
@@ -68,6 +68,8 @@ require_once __DIR__ . '/includes/config.inc.php';
                 $data = DatabaseHelper::getPortfolioData($userID);
                 showPortfolioData($data);
                 //once the data is retrived show it to the user;
+                //now its time to call the function to show company details using the method i wrote below. -June
+               
                 
             } catch (Exception $ex){//we all hate our ex'es :) - June
                 echo "<p>Database error: " . $ex . "</p>";
@@ -81,75 +83,70 @@ require_once __DIR__ . '/includes/config.inc.php';
 <?php
 //global methods start - June
 function showPortfolioData($result) {
-    // Extract key values safely
+    // Extract key values
     $totalCompanies = $result['total_unique_companies'] ?? 0;
     $totalShares = $result['total_shares'] ?? 0;
     $totalValue = $result['total_portfolio_value'] ?? 0;
     $portfolio = $result['portfolio'] ?? [];
 
-    echo "
+    echo '
     <section>
-        <h1>Portfolio Summary</h1>
+      <h1>Portfolio Summary</h1>
 
-        <div>
-            <div>
-                <h3>Companies</h3>
-                <p>$totalCompanies</p>
-                <p>Count of records</p>
-            </div>
-
-            <div>
-                <h3># Shares</h3>
-                <p>$totalShares</p>
-                <p>Sum of amount field</p>
-            </div>
-
-            <div>
-                <h3>Total Value</h3>
-                <p>\$" . number_format($totalValue, 2) . "</p>
-                <p>Sum of stock values</p>
-            </div>
+      <div class="portfolio-summary-grid">
+        <div class="summary-block">
+          <div class="summary-label">Companies</div>
+          <div class="summary-number">' . $totalCompanies . '</div>
+          <div class="summary-helper">Count of records</div>
         </div>
+        <div class="summary-block">
+          <div class="summary-label"># Shares</div>
+          <div class="summary-number">' . $totalShares . '</div>
+          <div class="summary-helper">Sum of amount field</div>
+        </div>
+        <div class="summary-block">
+          <div class="summary-label">Total Value</div>
+          <div class="summary-number">$' . number_format($totalValue, 2) . '</div>
+          <div class="summary-helper">Sum of stock values</div>
+        </div>
+      </div>
 
-        <h2>Portfolio Details</h2>
+      <h2>Portfolio Details</h2>
+      <table class="portfolio-table">
+        <thead>
+          <tr>
+            <th>Symbol</th>
+            <th>Name</th>
+            <th>Sector</th>
+            <th>Amount</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+    ';
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Symbol</th>
-                    <th>Name</th>
-                    <th>Sector</th>
-                    <th>Amount</th>
-                    <th>Value</th>
-                </tr>
-            </thead>
-            <tbody>
-    ";
-
-    // Output each row from the portfolio array
     foreach ($portfolio as $row) {
         $symbol = htmlspecialchars($row['symbol']);
         $name = htmlspecialchars($row['name']);
         $sector = htmlspecialchars($row['sector']);
         $amount = (int)$row['amount'];
         $value = number_format($row['stock_value'], 2);
-
         echo "
-            <tr>
-                <td><a href='company.php?ref=$symbol'>$symbol</a></td>
-                <td><a href='company.php?ref=$symbol'>$name</a></td>
-                <td>$sector</td>
-                <td>$amount</td>
-                <td>\$$value</td>
-            </tr>
+          <tr>
+            <td><a href='company.php?userid=" . $_GET['userid'] . "&ref=$symbol'>$symbol</a></td>
+            <td><a href='company.php?userid=" . $_GET['userid'] . "&ref=$symbol'>$name</a></td>
+            <td>$sector</td>
+            <td>$amount</td>
+            <td>\$$value</td>
+          </tr>
         ";
     }
 
-    echo "
-            </tbody>
-        </table>
+    echo '
+        </tbody>
+      </table>
     </section>
-    ";
+    ';
 }
 
 

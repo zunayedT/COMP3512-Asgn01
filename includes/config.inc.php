@@ -89,5 +89,48 @@ class DatabaseHelper {
             "total_portfolio_value" => round($totalPortValue, 2)
         ];
     }
+
+public static function getCompanyDetails($symbol){
+    try {
+        $dbPath = __DIR__ . '/../data/stocks.db';
+        $db = new PDO('sqlite:' . $dbPath);
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $stmt = $db->prepare("SELECT * FROM companies WHERE symbol = :symbol");
+        $stmt->bindValue(':symbol', $symbol);
+        $stmt->execute();
+        $company = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$company) return null;
+
+        $financials = [];
+        if (!empty($company['financials'])) {
+            $financials = json_decode($company['financials'], true);
+        }
+
+        $stmt2 = $db->prepare("SELECT * FROM history WHERE symbol = :symbol ORDER BY date DESC LIMIT 90");
+        $stmt2->bindValue(':symbol', $symbol);
+        $stmt2->execute();
+        $history = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+
+        $stmt3 = $db->prepare("
+            SELECT MAX(high) AS maxHigh, MIN(low) AS minLow,
+                   SUM(volume) AS totalVolume, AVG(volume) AS avgVolume
+            FROM history WHERE symbol = :symbol");
+        $stmt3->bindValue(':symbol', $symbol);
+        $stmt3->execute();
+        $stats = $stmt3->fetch(PDO::FETCH_ASSOC);
+
+        return [
+            'company'    => $company,
+            'financials' => $financials,
+            'history'    => $history,
+            'stats'      => $stats
+        ];
+
+    } catch (PDOException $e) {
+        die("Database error: " . $e->getMessage());
+    }
+}
 }
 ?>
