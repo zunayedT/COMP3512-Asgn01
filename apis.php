@@ -19,7 +19,7 @@ $endpoints = [
 <head>
     <title>Portfolio Project - APIs</title>
     <meta charset=utf-8>
-    <!--insert style links later -->
+    <link rel="stylesheet" href="assets/apiStyle.css"> 
 </head>
 <body >
 
@@ -30,7 +30,6 @@ $endpoints = [
         <a href="about.php">About</a>
         <a href="apis.php">APIs</a>
     </nav>
-    <hr>
 </header>
 
 <!---adding inline styling for flex for now later we can get crazy inside CSS aswell -June -->
@@ -39,6 +38,7 @@ $endpoints = [
 // URL and Description formatted as Table for Now -- Will change or adjust border colours/layout
 echo "<table border='1' cellpadding='6' cellspacing='0'>";
 echo "<tr><th>URL</th><th>Description</th></tr>";
+// i am sorry man i have an idea to showcase the json in a cool way. I think its cool lets see how it goes. -June
 
 //Loops array output - defined at start of page
 foreach ($endpoints as $key => $value) {

@@ -48,6 +48,15 @@ function showCompanyData($data) {
         }
         echo "</tbody></table>";
     }
+    // --- stats boxes ---
+    echo "<div class='stats-boxes'>
+            <div class='stat-box'><strong>History High:</strong> \${$stats['maxHigh']}</div>
+            <div class='stat-box'><strong>History Low:</strong> \${$stats['minLow']}</div>
+            <div class='stat-box'><strong>Total Volume:</strong> {$stats['totalVolume']}</div>
+            <div class='stat-box'><strong>Average Volume:</strong> {$stats['avgVolume']}</div>
+          </div>";
+
+    echo "</section>";
 
     // --- history table ---
     echo "<h3>History (3M)</h3>";
@@ -65,15 +74,7 @@ function showCompanyData($data) {
     }
     echo "</tbody></table>";
 
-    // --- stats boxes ---
-    echo "<div class='stats-boxes'>
-            <div class='stat-box'><strong>History High:</strong> \${$stats['maxHigh']}</div>
-            <div class='stat-box'><strong>History Low:</strong> \${$stats['minLow']}</div>
-            <div class='stat-box'><strong>Total Volume:</strong> {$stats['totalVolume']}</div>
-            <div class='stat-box'><strong>Average Volume:</strong> {$stats['avgVolume']}</div>
-          </div>";
-
-    echo "</section>";
+    
 }
 ?>
 <!DOCTYPE html>
@@ -81,7 +82,7 @@ function showCompanyData($data) {
 <head>
   <meta charset="UTF-8">
   <title><?= htmlspecialchars($data['company']['name'] ?? 'Company') ?> - Details</title>
-  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/companyStyle.css">
 </head>
 <body>
 

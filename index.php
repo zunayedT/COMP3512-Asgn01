@@ -10,7 +10,7 @@ require_once __DIR__ . '/includes/config.inc.php';
 <head>
     <title>Portfolio Project - Home Page</title>
     <meta charset=utf-8>
-    <!--insert style links later -->
+    <link rel="stylesheet" href="assets/indexStyle.css">
 </head>
 <body >
 
@@ -75,7 +75,7 @@ require_once __DIR__ . '/includes/config.inc.php';
                 echo "<p>Database error: " . $ex . "</p>";
             }
         } else {
-            echo "<p>Please select a customer or else the code wont work</p>";
+            echo "<p>Please select a portfolio button corresponding to the clients name, in order to view portfolio. We really appriciate your bussiness with us.</p>";
         }
         ?>
     </section>
