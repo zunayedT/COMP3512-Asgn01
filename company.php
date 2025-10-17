@@ -93,7 +93,6 @@ function showCompanyData($data) {
     <a href="about.php">About</a>
     <a href="apis.php">APIs</a>
   </nav>
-  <hr>
 </header>
 
 <main class="company-container">
