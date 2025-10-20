@@ -104,6 +104,8 @@ function showCompanyData($data) {
 <main class="company-container">
   <?php showCompanyData($data); ?>
 </main>
-
+<footer>
+    <p>© <?php echo date("Y"); ?> COMP 3512 Assignment #1 | Mount Royal University</p>
+</footer>
 </body>
 </html>

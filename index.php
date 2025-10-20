@@ -81,6 +81,10 @@ require_once __DIR__ . '/includes/db-classes.inc.php';
         ?>
     </section>
     </main>
+
+<footer>
+    <p>© <?php echo date("Y"); ?> COMP 3512 Assignment #1 | Mount Royal University</p>
+</footer>
 <?php
 
 //global methods start - June

@@ -1,3 +1,20 @@
+/* inspired by ChatGpt */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: #e8ecf3;
+}
+
+a {
+  text-decoration: none;
+}
 
 /* --- Theme Variables --- */
 :root {
@@ -15,23 +32,26 @@
   --shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
 }
 
-
-/* --- Table Styling --- */
+/* --- Main Layout --- */
 main {
   max-width: 1200px;
   width: 90%;
-  margin: 30px auto;
-  display: flex;
-  justify-content: center;
+  margin: 40px auto;
+  padding: 24px;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
 }
 
+/* --- Table Styling --- */
 table {
   width: 100%;
   border-collapse: collapse;
-  background: var(--surface-1);
-  border: 1px solid var(--border);
   border-radius: 10px;
   overflow: hidden;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
   box-shadow: var(--shadow);
 }
 
@@ -53,20 +73,32 @@ tr:hover {
   background: rgba(30,107,214,0.08);
 }
 
+/* --- Links --- */
 a {
   color: var(--gold);
   font-weight: 600;
   transition: color 0.25s ease;
 }
+
 a:hover {
   color: var(--blue);
+}
+
+/* --- Headings --- */
+h1, h2, h3 {
+  color: var(--gold);
+  margin-top: 0;
+  text-align: left;
+  padding-bottom: 10px;
 }
 
 /* --- Responsive --- */
 @media (max-width: 768px) {
   main {
     width: 95%;
+    padding: 16px;
   }
+
   table, th, td {
     font-size: 0.9rem;
   }

@@ -52,5 +52,8 @@ foreach ($endpoints as $key => $value) {
 echo "</table>";
 ?>
 </main>
+<footer>
+    <p>© <?php echo date("Y"); ?> COMP 3512 Assignment #1 | Mount Royal University</p>
+</footer>
 </body>
 </html>
