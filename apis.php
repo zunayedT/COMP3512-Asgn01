@@ -19,7 +19,8 @@ $endpoints = [
 <head>
     <title>Portfolio Project - APIs</title>
     <meta charset=utf-8>
-    <link rel="stylesheet" href="assets/apiStyle.css"> 
+    <link rel="stylesheet" href="assets/globalStyle.css"> 
+     <link rel="stylesheet" href="assets/apiStyle.css">
 </head>
 <body >
 

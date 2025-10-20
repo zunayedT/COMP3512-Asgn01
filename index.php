@@ -3,6 +3,7 @@
 //-yes we are goood just like this cacuse sql lite has operator system level validation ass good like this.
 //i will still create the inc file which will contain the API you will need for the button to work. -june
 require_once __DIR__ . '/includes/config.inc.php';
+require_once __DIR__ . '/includes/db-classes.inc.php';
 ?>
 
 <!DOCTYPE html>
@@ -10,6 +11,7 @@ require_once __DIR__ . '/includes/config.inc.php';
 <head>
     <title>Portfolio Project - Home Page</title>
     <meta charset=utf-8>
+    <link rel="stylesheet" href="assets/globalStyle.css">
     <link rel="stylesheet" href="assets/indexStyle.css">
 </head>
 <body >
@@ -21,7 +23,6 @@ require_once __DIR__ . '/includes/config.inc.php';
         <a href="about.php">About</a>
         <a href="apis.php">APIs</a>
     </nav>
-    <hr>
 </header>
 <!---adding inline styling for flex for now later we can get crazy inside CSS aswell -June -->
 <main style="display: flex;">
@@ -65,7 +66,7 @@ require_once __DIR__ . '/includes/config.inc.php';
             //remember user id in the portfolio table is the ID in the user table. -June
             try{
                 //calling the associated functiions
-                $data = DatabaseHelper::getPortfolioData($userID);
+                $data = CompaniesDB::getPortfolioData($userID);
                 showPortfolioData($data);
                 //once the data is retrived show it to the user;
                 //now its time to call the function to show company details using the method i wrote below. -June
@@ -81,6 +82,7 @@ require_once __DIR__ . '/includes/config.inc.php';
     </section>
     </main>
 <?php
+
 //global methods start - June
 function showPortfolioData($result) {
     // Extract key values
@@ -148,9 +150,6 @@ function showPortfolioData($result) {
     </section>
     ';
 }
-
-
-
 ?>
 </body>
 </html>

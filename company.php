@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/includes/config.inc.php';
+require_once __DIR__ . '/includes/db-classes.inc.php';
 
 // check for symbol parameter
 if (!isset($_GET['ref']) || empty($_GET['ref'])) {
@@ -7,7 +8,7 @@ if (!isset($_GET['ref']) || empty($_GET['ref'])) {
 }
 
 $symbol = $_GET['ref'];
-$data = DatabaseHelper::getCompanyDetails($symbol);   
+$data = CompaniesDB::getCompanyDetails($symbol);   
 //function to create dynamic HTML For the page. 
 function showCompanyData($data) {
     $company = $data['company'];
@@ -47,6 +48,10 @@ function showCompanyData($data) {
                   </tr>";
         }
         echo "</tbody></table>";
+    } else {
+      "<p class='no-financials'>
+            ⚠️ Financial data for this company is currently unavailable in the database.
+          </p>";
     }
     // --- stats boxes ---
     echo "<div class='stats-boxes'>
@@ -82,6 +87,7 @@ function showCompanyData($data) {
 <head>
   <meta charset="UTF-8">
   <title><?= htmlspecialchars($data['company']['name'] ?? 'Company') ?> - Details</title>
+  <link rel="stylesheet" href="assets/globalStyle.css">
   <link rel="stylesheet" href="assets/companyStyle.css">
 </head>
 <body>
