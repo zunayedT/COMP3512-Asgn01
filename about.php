@@ -27,7 +27,7 @@
         <h2>About This Project</h2>
         <p>
             This site was developed as part of <strong>Assignment #1</strong> for 
-            <em>COMP 3512 – Web II (Server-Side Scripting)</em> at Mount Royal University.  
+            <em>COMP 3512 – Web II </em> at Mount Royal University.  
             It demonstrates a PHP-based web application that connects to a SQLite database
             using <strong>PDO</strong> to display user portfolios and stock market data.
         </p>
